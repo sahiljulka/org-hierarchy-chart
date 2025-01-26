@@ -1,0 +1,32 @@
+<header class="header-6">
+    <div class="branding">
+        <a href="javascript://" class="nav-link">
+            <cds-icon shape="cog" solid="true" size="20"></cds-icon>
+            <span class="title">Hierarchical Organization Chart</span>
+        </a>
+    </div>
+</header>
+<div>
+    <header class="header-7 ">
+        <div class="tabs-container">
+            <clr-tabs>
+                <clr-tab>
+                    <button clrTabLink><cds-icon class="px-4" shape="map"></cds-icon> GRID VIEW </button>
+                    <clr-tab-content *clrIfActive><app-org-chart-grid [employees]="employees"
+                        [employees]="employees"
+                        (addReportee)="onAddReportee($event)"
+                        (editEmployee)="onEditEmployee($event)"
+                        (deleteEmployee)="onDeleteEmployee($event)"
+                        (changeReportingLine)="onChangeReportingLine($event.employeeId, $event.newManagerId)"></app-org-chart-grid>
+                    </clr-tab-content>
+                </clr-tab>
+                <clr-tab>
+                    <button clrTabLink> <cds-icon shape="grid-chart" size="20"></cds-icon> GRAPH VIEW </button>
+                    <clr-tab-content *clrIfActive><app-org-chart-graph /></clr-tab-content>
+                </clr-tab>
+            </clr-tabs>
+        </div>
+    </header>
+</div>
+
+<app-add-reportee [managerDetails]="managerDetails" [showDialog]="showAddReporteeDialog" (modalClose)="modalClose($event)" (saveEmployee)="saveEmployee($event)"></app-add-reportee>

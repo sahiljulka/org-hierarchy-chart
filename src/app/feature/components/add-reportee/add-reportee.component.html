@@ -1,0 +1,97 @@
+<clr-modal [(clrModalOpen)]="showDialog"  [clrModalClosable]="false">
+    <h3 class="modal-title">Add New Reportee</h3>
+    <div class="modal-body">
+        <p class="clr-text-gray">
+            Add a new employee who will report directly to this person.Provide details like
+            name, description, email, and phone to create their profile in the organization
+            chart.
+        </p>
+        <form [formGroup]="addEmployeeForm" (ngSubmit)="onSubmit()">
+            <div class="clr-row">
+                <div class="clr-col-12 clr-col-md-6 label-field">
+                    <label>Manager</label>
+                </div>
+                <div class="clr-col-12 clr-col-md-6">
+                    <clr-input-container>
+                        <input clrInput [value]="managerDetails.managerName" disabled />
+                    </clr-input-container>
+                </div>
+            </div>
+
+            <!-- Row 2: Employee Name -->
+            <div class="clr-row">
+                <div class="clr-col-12 clr-col-md-6 label-field">
+                    <label for="name">Employee Name</label>
+                </div>
+                <div class="clr-col-12 clr-col-md-6">
+                    <clr-input-container>
+                        <input class="full-width-input" clrInput id="name" type="text" formControlName="name" />
+                        <clr-control-error *ngIf="nameControl?.invalid && nameControl?.touched">
+                            <small *ngIf="nameControl?.hasError('required')">Name is required</small>
+                            <small *ngIf="nameControl?.hasError('minlength')">Name must be at least 3 characters</small>
+                        </clr-control-error>
+                    </clr-input-container>
+                </div>
+            </div>
+
+            <!-- Row 3: Designation -->
+            <div class="clr-row">
+                <!-- Label for Designation -->
+                <div class="clr-col-12 clr-col-md-6 label-field">
+                    <label for="designation">Designation</label>
+                </div>
+
+                <!-- Dropdown for Designation -->
+                <div class="clr-col-12 clr-col-md-6">
+                    <clr-select-container>
+                        <select class="clr-select input-size-xl" clrSelect id="designation"
+                            formControlName="designation">
+                            <option *ngFor="let designation of designationOptions" [value]="designation">{{ designation
+                                }}</option>
+                        </select>
+                        <clr-control-error *ngIf="designationControl?.invalid && designationControl?.touched">
+                            <small *ngIf="designationControl?.hasError('required')">Designation is required</small>
+                        </clr-control-error>
+                    </clr-select-container>
+                </div>
+            </div>
+
+            <!-- Row 4: Email -->
+            <div class="clr-row">
+                <div class="clr-col-12 clr-col-md-6 label-field">
+                    <label for="email">Email</label>
+                </div>
+                <div class="clr-col-12 clr-col-md-6">
+                    <clr-input-container>
+                        <input clrInput id="email" type="email" formControlName="email" />
+                        <clr-control-error *ngIf="emailControl?.invalid && emailControl?.touched">
+                            <small *ngIf="emailControl?.hasError('required')">Email is required</small>
+                            <small *ngIf="emailControl?.hasError('email')">Invalid email format</small>
+                        </clr-control-error>
+                    </clr-input-container>
+                </div>
+            </div>
+
+            <!-- Row 5: Phone Number -->
+            <div class="clr-row">
+                <div class="clr-col-12 clr-col-md-6 label-field">
+                    <label for="phone">Phone Number</label>
+                </div>
+                <div class="clr-col-12 clr-col-md-6">
+                    <clr-input-container>
+                        <input clrInput id="phone" type="text" formControlName="phone" />
+                        <clr-control-error *ngIf="phoneControl?.invalid && phoneControl?.touched">
+                            <small *ngIf="phoneControl?.hasError('required')">Phone number is required</small>
+                            <small *ngIf="phoneControl?.hasError('pattern')">Invalid phone number</small>
+                        </clr-control-error>
+                    </clr-input-container>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" (click)="closeModal()">Cancel</button>
+                <button type="submit" [disabled]="addEmployeeForm.invalid" class="btn btn-primary">Ok</button>
+            </div>
+        </form>
+    </div>
+</clr-modal>

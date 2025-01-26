@@ -1,0 +1,47 @@
+<clr-datagrid>
+    <!-- Columns -->
+    <clr-dg-column>Employee Name</clr-dg-column>
+    <clr-dg-column>Employee ID</clr-dg-column>
+    <clr-dg-column>Designation</clr-dg-column>
+    <clr-dg-column>Email</clr-dg-column>
+    <clr-dg-column>Phone</clr-dg-column>
+    <clr-dg-column>Manager</clr-dg-column>
+
+    <!-- Rows -->
+    <clr-dg-row *ngFor="let employee of employees">
+            
+            <clr-dg-action-overflow>
+                <button class="action-item" (click)="onEditEmployee(employee)">
+                    Edit Details
+                </button>
+                <button class="action-item" (click)="onChangeReportingLine(employee.id,'')">
+                    Change Reporting Line
+                </button>
+                <button class="action-item" (click)="onDeleteEmployee(employee.id)">
+                    Delete Employee
+                </button>
+                <button class="action-item" (click)="onAddReportee(employee.id)">
+                    Add Reportee
+                </button>
+            </clr-dg-action-overflow>
+
+        <clr-dg-cell>{{ employee.name }}</clr-dg-cell>
+        <clr-dg-cell>{{ employee.id }}</clr-dg-cell>
+        <clr-dg-cell>{{ employee.designation }}</clr-dg-cell>
+        <clr-dg-cell>{{ employee.email }}</clr-dg-cell>
+        <clr-dg-cell>{{ employee.phone }}</clr-dg-cell>
+        <clr-dg-cell>{{ employee.managerName }}</clr-dg-cell>
+
+    </clr-dg-row>
+
+    <!-- Pagination -->
+    <clr-dg-footer>
+        <clr-dg-pagination [clrDgPageSize]="5">
+            <clr-dg-page-size [clrPageSizeOptions]="[5, 10, 15, 20]">
+                Employees per page
+            </clr-dg-page-size>
+            {{ employees.length }} employees
+        </clr-dg-pagination>
+    </clr-dg-footer>
+</clr-datagrid>
+
