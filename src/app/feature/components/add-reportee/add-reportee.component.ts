@@ -1,7 +1,8 @@
-import { Employee,EmployeeDesignation } from 'src/app/core/models/employee.model';
+import { Employee, EmployeeDesignation, EmployeeUI } from 'src/app/core/models/employee.model';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { v4 as uuidv4 } from 'uuid';
+import { EmployeeService } from '../../services/employee.service';
 
 @Component({
   selector: 'app-add-reportee',
@@ -10,18 +11,18 @@ import { v4 as uuidv4 } from 'uuid';
 })
 export class AddReporteeComponent {
   @Input('showDialog') showDialog = false
-  @Input('managerDetails') managerDetails:{managerName:string,managerId:string} = {managerName:'',managerId:""}
+  @Input('managerDetails') managerDetails: EmployeeUI = {} as EmployeeUI
   @Output() modalClose = new EventEmitter<boolean>();
-  @Output() saveEmployee = new EventEmitter<Employee>();
 
   closeModal() {
-    this.modalClose.emit(true)
+    this.addEmployeeForm.reset()
+    this.modalClose.emit(false)
   }
 
   addEmployeeForm!: FormGroup;
   designationOptions = Object.values(EmployeeDesignation);
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder,private employeeService: EmployeeService) { }
 
   ngOnInit() {
     this.addEmployeeForm = this.fb.group({
@@ -49,9 +50,10 @@ export class AddReporteeComponent {
   }
 
   onSubmit() {
-    let employeeDetails:Employee = {...this.addEmployeeForm.value,managerId:this.managerDetails.managerId,id:uuidv4()}
-    this.saveEmployee.emit(employeeDetails)
+    let employeeDetails: Employee = { ...this.addEmployeeForm.value, managerId: this.managerDetails?.id, id: uuidv4() }
+    this.employeeService.addEmployee(employeeDetails)
     this.addEmployeeForm.reset()
+    this.modalClose.emit(true)
   }
 
 }

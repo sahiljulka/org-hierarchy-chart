@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 import { AddReporteeComponent } from './components/add-reportee/add-reportee.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DeleteEmployeeComponent } from './components/delete-employee/delete-employee.component';
+import { ChangeReportingComponent } from './components/change-reporting/change-reporting.component';
 
 
 
@@ -17,7 +18,8 @@ import { DeleteEmployeeComponent } from './components/delete-employee/delete-emp
     OrgChartGraphComponent,
     OrgChartGridComponent,
     AddReporteeComponent,
-    DeleteEmployeeComponent
+    DeleteEmployeeComponent,
+    ChangeReportingComponent
   ],
   imports: [
     CommonModule,

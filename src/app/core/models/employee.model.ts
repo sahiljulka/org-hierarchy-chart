@@ -4,7 +4,7 @@ export interface Employee {
     designation: EmployeeDesignation;
     email: string;
     phone: string;
-    managerId: string | null;
+    managerId?: string;
   }
   
 

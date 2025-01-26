@@ -2,6 +2,13 @@ import { EmployeeService } from '../../services/employee.service';
 import { Employee, EmployeeUI } from './../../../core/models/employee.model';
 import { Component } from '@angular/core';
 
+
+export enum ModalType {
+  AddReportee = 'AddReportee',
+  DeleteReportee = 'DeleteReportee',
+  ChangeReporting = 'ChangeReporting',
+}
+
 @Component({
   selector: 'app-org-chart-base',
   templateUrl: './org-chart-base.component.html',
@@ -9,11 +16,17 @@ import { Component } from '@angular/core';
 })
 export class OrgChartBaseComponent {
 
-  employees: EmployeeUI[] = [];
-  showAddReporteeDialog=false
-  managerDetails:{managerName:string,managerId:string} = {managerName:'',managerId:""}
+  MODALTYPE = ModalType
 
-  constructor(private employeeService: EmployeeService) {}
+  employees: EmployeeUI[] = [];
+  showAddReporteeDialog = false
+  managerDetails: { managerName: string, managerId: string } = { managerName: '', managerId: "" }
+  isModalOpen = false;
+  modalType: ModalType = ModalType.AddReportee;
+  selectedEmployee: EmployeeUI ={} as EmployeeUI;
+  managers:{id:string,name:string}[]=[]
+
+  constructor(private employeeService: EmployeeService) { }
 
   ngOnInit(): void {
     this.fetchEmployees();
@@ -23,35 +36,21 @@ export class OrgChartBaseComponent {
     this.employees = this.employeeService.getEmployees();
   }
 
-  onAddReportee(employeeId:string): void {
-    let managerName=this.employees.filter(e=>e.id==employeeId).shift()?.name || ""
-    this.managerDetails={managerName:managerName,managerId:employeeId}
-    this.showAddReporteeDialog=true
+  openModal(modalType: ModalType, employee: EmployeeUI) {
+    this.modalType = modalType;
+    if (employee) {
+      this.selectedEmployee = employee;
+    }
+    if(this.modalType===ModalType.ChangeReporting){
+      this.managers=this.employees.filter(e=>(e.id!==employee.id && e.id!=employee.managerId)).map(e=>({id:e.id,name:e.name}))
+    }
+    this.isModalOpen = true;
   }
 
-  onEditEmployee(employee: Employee): void {
-    this.employeeService.updateEmployee(employee);
-    this.fetchEmployees(); // Refresh the data
-  }
-
-  onDeleteEmployee(employeeId: string): void {
-    this.employeeService.deleteEmployee(employeeId);
-    this.fetchEmployees(); // Refresh the data
-  }
-
-  onChangeReportingLine(employeeId: string, newManagerId: string): void {
-    this.employeeService.changeReportingLine(employeeId, newManagerId);
-    this.fetchEmployees(); // Refresh the data
-  }
-
-
-  modalClose(event:any){
-    this.showAddReporteeDialog=false
-  }
-
-  saveEmployee(employee:Employee){
-    this.employeeService.addEmployee(employee)
-    this.showAddReporteeDialog=false
-    this.fetchEmployees()
+  modalClose(actionCompleted=false) {
+    this.isModalOpen = false;
+    if(actionCompleted){
+      this.fetchEmployees()
+    }
   }
 }

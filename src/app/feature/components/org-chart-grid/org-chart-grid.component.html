@@ -9,21 +9,17 @@
 
     <!-- Rows -->
     <clr-dg-row *ngFor="let employee of employees">
-            
-            <clr-dg-action-overflow>
-                <button class="action-item" (click)="onEditEmployee(employee)">
-                    Edit Details
-                </button>
-                <button class="action-item" (click)="onChangeReportingLine(employee.id,'')">
-                    Change Reporting Line
-                </button>
-                <button class="action-item" (click)="onDeleteEmployee(employee.id)">
-                    Delete Employee
-                </button>
-                <button class="action-item" (click)="onAddReportee(employee.id)">
-                    Add Reportee
-                </button>
-            </clr-dg-action-overflow>
+        <clr-dg-action-overflow>
+            <button class="action-item" (click)="onChangeReportingLine(employee,'')">
+                Change Reporting Line
+            </button>
+            <button class="action-item" (click)="onDeleteEmployee(employee)">
+                Delete Employee
+            </button>
+            <button class="action-item" (click)="onAddReportee(employee)">
+                Add Reportee
+            </button>
+        </clr-dg-action-overflow>
 
         <clr-dg-cell>{{ employee.name }}</clr-dg-cell>
         <clr-dg-cell>{{ employee.id }}</clr-dg-cell>
@@ -34,7 +30,6 @@
 
     </clr-dg-row>
 
-    <!-- Pagination -->
     <clr-dg-footer>
         <clr-dg-pagination [clrDgPageSize]="5">
             <clr-dg-page-size [clrPageSizeOptions]="[5, 10, 15, 20]">
@@ -44,4 +39,3 @@
         </clr-dg-pagination>
     </clr-dg-footer>
 </clr-datagrid>
-

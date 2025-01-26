@@ -1,5 +1,5 @@
 <clr-modal [(clrModalOpen)]="showDialog" [clrModalClosable]="false">
-    <h3 class="modal-title">Delete Employee</h3>
+    <h4 class="modal-title">Delete Employee</h4>
     <div class="modal-body">
         <p class="clr-text-gray">
             Deleting this employee will reassign their direct reportees to the employee's
@@ -8,18 +8,16 @@
         </p>
         <div class="clr-row">
             <div class="clr-col-12 clr-col-md-6 label-field">
-                <label>Employee Name</label>
+                <label class="clr-control-label">Employee Name</label>
             </div>
             <div class="clr-col-12 clr-col-md-6">
-                <clr-input-container>
-                    <input clrInput [value]="employee?.name" disabled />
-                </clr-input-container>
+                <label>{{employee?.name}}</label>
             </div>
         </div>
 
         <div class="modal-footer">
-            <!-- <button type="button" class="btn btn-outline" (click)="closeModal()">Cancel</button> -->
-            <!-- <button type="submit" [disabled]="addEmployeeForm.invalid" class="btn btn-primary">Ok</button> -->
+            <button type="button" class="btn btn-outline" (click)="closeModal()">Cancel</button>
+            <button type="submit" class="btn btn-danger" (click)="deleteEmployee()">Delete</button>
         </div>
     </div>
 </clr-modal>

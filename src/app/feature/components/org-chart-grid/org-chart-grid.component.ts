@@ -8,24 +8,24 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class OrgChartGridComponent {
   @Input() employees: EmployeeUI[] = [];
-  @Output() addReportee = new EventEmitter<string>();
-  @Output() editEmployee = new EventEmitter<Employee>();
-  @Output() deleteEmployee = new EventEmitter<string>();
-  @Output() changeReportingLine = new EventEmitter<{ employeeId: string; newManagerId: string }>();
+  @Output() addReportee = new EventEmitter<EmployeeUI>();
+  @Output() editEmployee = new EventEmitter<EmployeeUI>();
+  @Output() deleteEmployee = new EventEmitter<EmployeeUI>();
+  @Output() changeReportingLine = new EventEmitter<EmployeeUI>();
 
-  onAddReportee(managerId: string): void {
-    this.addReportee.emit(managerId);
+  onAddReportee(manager: EmployeeUI): void {
+    this.addReportee.emit(manager);
   }
 
-  onEditEmployee(employee: Employee): void {
+  onEditEmployee(employee: EmployeeUI): void {
     this.editEmployee.emit(employee);
   }
 
-  onDeleteEmployee(employeeId: string): void {
-    this.deleteEmployee.emit(employeeId);
+  onDeleteEmployee(employee: EmployeeUI): void {
+    this.deleteEmployee.emit(employee);
   }
 
-  onChangeReportingLine(employeeId: string, newManagerId: string): void {
-    this.changeReportingLine.emit({ employeeId, newManagerId });
+  onChangeReportingLine(employee: EmployeeUI,managerId:string): void {
+    this.changeReportingLine.emit(employee);
   }
 }

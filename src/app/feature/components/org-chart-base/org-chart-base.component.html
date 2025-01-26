@@ -13,11 +13,9 @@
                 <clr-tab>
                     <button clrTabLink><cds-icon class="px-4" shape="map"></cds-icon> GRID VIEW </button>
                     <clr-tab-content *clrIfActive><app-org-chart-grid [employees]="employees"
-                        [employees]="employees"
-                        (addReportee)="onAddReportee($event)"
-                        (editEmployee)="onEditEmployee($event)"
-                        (deleteEmployee)="onDeleteEmployee($event)"
-                        (changeReportingLine)="onChangeReportingLine($event.employeeId, $event.newManagerId)"></app-org-chart-grid>
+                            (addReportee)="openModal(MODALTYPE.AddReportee,$event)"
+                            (deleteEmployee)="openModal(MODALTYPE.DeleteReportee, $event)"
+                            (changeReportingLine)="openModal(MODALTYPE.ChangeReporting, $event)"></app-org-chart-grid>
                     </clr-tab-content>
                 </clr-tab>
                 <clr-tab>
@@ -29,4 +27,10 @@
     </header>
 </div>
 
-<app-add-reportee [managerDetails]="managerDetails" [showDialog]="showAddReporteeDialog" (modalClose)="modalClose($event)" (saveEmployee)="saveEmployee($event)"></app-add-reportee>
+<app-add-reportee [managerDetails]="selectedEmployee" [showDialog]="isModalOpen && modalType === MODALTYPE.AddReportee"
+    (modalClose)="modalClose($event)"></app-add-reportee>
+<app-delete-employee [employee]="selectedEmployee" [showDialog]="isModalOpen && modalType === MODALTYPE.DeleteReportee"
+    (modalClose)="modalClose($event)"></app-delete-employee>
+<app-change-reporting [employee]="selectedEmployee"
+    [showDialog]="isModalOpen && modalType === MODALTYPE.ChangeReporting" [managers]="managers"
+    (modalClose)="modalClose($event)"></app-change-reporting>

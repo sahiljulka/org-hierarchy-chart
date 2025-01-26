@@ -1,0 +1,44 @@
+<clr-modal [(clrModalOpen)]="showDialog" [clrModalClosable]="false">
+    <h3 class="modal-title">Change Reporting Manager</h3>
+    <div class="modal-body">
+        <p class="clr-text-gray">
+            Reassign this employee to report to a new manager. Select the desired
+            manager from the available options to update the reporting hierarchy in the
+            organization chart
+        </p>
+        <form [formGroup]="changeReportingForm">
+            <!-- Manager label and dropdown -->
+            <div class="clr-row">
+                <div class="clr-col-12 clr-col-md-6 label-field">
+                    <label class="clr-control-label">Employee Name</label>
+                </div>
+                <div class="clr-col-12 clr-col-md-6">
+                    <label>{{employee?.name}}</label>
+                </div>
+            </div>
+            
+            <div class="clr-row">
+              <div class="clr-col-12 clr-col-md-6 label-field">
+                <label for="manager">Manager Name</label>
+              </div>
+              <div class="clr-col-12 clr-col-md-6">
+                <clr-select-container>
+                  <select id="manager" formControlName="manager" clrSelect>
+                    <option value="" disabled>Select New Reporting Manager</option>
+                    <option *ngFor="let manager of managers" [value]="manager.id">{{ manager.name }}</option>
+                  </select>
+                  <clr-control-error *ngIf="managerControl?.invalid && managerControl?.touched">
+                    <small *ngIf="managerControl?.hasError('required')">Manager is required</small>
+                  </clr-control-error>
+                </clr-select-container>
+              </div>
+            </div>
+          </form>
+
+          <!-- Modal Footer -->
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline" (click)="closeModal()">Cancel</button>
+        <button type="submit" class="btn btn-primary" [disabled]="changeReportingForm.invalid" (click)="submit()">Submit</button>
+    </div>
+    </div>
+</clr-modal>
