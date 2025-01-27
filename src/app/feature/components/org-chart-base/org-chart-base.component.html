@@ -12,7 +12,10 @@
                 </clr-tab>
                 <clr-tab>
                     <button clrTabLink> <cds-icon shape="grid-chart" size="20"></cds-icon> GRAPH VIEW </button>
-                    <clr-tab-content *clrIfActive><app-org-chart-graph /></clr-tab-content>
+                    <clr-tab-content *clrIfActive><app-org-chart-graph [employees]="(employees$ | async) || []"
+                            (addReportee)="openModal(MODALTYPE.AddReportee,$event)"
+                            (deleteEmployee)="openModal(MODALTYPE.DeleteReportee, $event)"
+                            (changeReportingLine)="openModal(MODALTYPE.ChangeReporting, $event)" /></clr-tab-content>
                 </clr-tab>
             </clr-tabs>
         </div>
@@ -24,5 +27,4 @@
 <app-delete-employee *ngIf="showDeleteEmployeeDialog" [employee]="selectedEmployee"
     (modalClose)="modalClose($event)"></app-delete-employee>
 <app-change-reporting *ngIf="showChangeReportingDialog" [employee]="selectedEmployee"
-     [managers]="(managers$ | async) || []"
-    (modalClose)="modalClose($event)"></app-change-reporting>
+    [managers]="(managers$ | async) || []" (modalClose)="modalClose($event)"></app-change-reporting>

@@ -2,7 +2,7 @@ import { select, Store } from '@ngrx/store';
 import { EmployeeService } from '../../services/employee.service';
 import { Employee, EmployeeUI } from './../../../core/models/employee.model';
 import { Component } from '@angular/core';
-import { map, Observable, of } from 'rxjs';
+import { map, Observable, of, shareReplay } from 'rxjs';
 import { selectEmployees, selectError, selectLoading } from '../../store/selectors/employee.selectors';
 import { loadEmployees } from '../../store/actions/employee.actions';
 
@@ -11,6 +11,12 @@ export enum ModalType {
   AddReportee = 'AddReportee',
   DeleteReportee = 'DeleteReportee',
   ChangeReporting = 'ChangeReporting',
+}
+
+export enum EMPLOYEE_ACTIONS{
+  Change_Reporting_Line="Change Reporting Line",
+  Delete_Employee="Delete Employee",
+  Add_Reportee="Add Reportee"
 }
 
 @Component({
@@ -29,7 +35,8 @@ export class OrgChartBaseComponent {
   modalType: ModalType = ModalType.AddReportee;
   selectedEmployee: EmployeeUI = {} as EmployeeUI;
 
-  constructor(private store: Store) { }
+  constructor(private store: Store) {
+   }
 
   ngOnInit(): void {
     this.fetchEmployees();

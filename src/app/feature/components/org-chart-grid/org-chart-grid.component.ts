@@ -17,10 +17,6 @@ export class OrgChartGridComponent {
     this.addReportee.emit(manager);
   }
 
-  onEditEmployee(employee: EmployeeUI): void {
-    this.editEmployee.emit(employee);
-  }
-
   onDeleteEmployee(employee: EmployeeUI): void {
     this.deleteEmployee.emit(employee);
   }

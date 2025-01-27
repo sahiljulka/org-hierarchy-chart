@@ -1,1 +1,6 @@
-<p>org-chart-graph works!</p>
+<p-organizationChart [value]="organizationData">
+    <ng-template let-node pTemplate="default">
+        <app-card [title]="node.label" [email]="node.email" [phonenumber]="node.phone" [designation]="node.designation" [actions]="actions" (cardActionSelected)="onCardSelected($event,node)">
+        </app-card>
+    </ng-template>
+</p-organizationChart>

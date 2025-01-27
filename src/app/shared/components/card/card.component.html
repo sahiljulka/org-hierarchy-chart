@@ -1,0 +1,27 @@
+<div class="clr-row">
+    <div class="clr-col-lg-12 clr-col-12">
+        <div class="card card-container">
+            <h6 class="card-header header">
+                <div>{{ title }}</div>
+                <clr-dropdown>
+                    <div><cds-icon shape="cog" solid="true" size="20" clrDropdownTrigger></cds-icon></div>
+                    <clr-dropdown-menu clrPosition="top-left" *clrIfOpen>
+                        <div *ngFor="let action of actions" clrDropdownItem (click)="onClick(action)">
+                            {{action}}
+                        </div>
+                    </clr-dropdown-menu>
+                  </clr-dropdown>
+            </h6>
+            <div class="card-block">
+                <div class="card-media-block ">
+                    <cds-icon class="card-media-image" shape="user" solid="true" size="60"></cds-icon>
+                    <div class="card-media-description card-body">
+                        <span class="card-media-title">{{designation}}</span>
+                        <span class="card-media-text">Email: {{email}}</span>
+                        <span class="card-media-text">Phone: {{phoneNumber}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
