@@ -25,7 +25,7 @@ export class OrgChartGridComponent {
     this.deleteEmployee.emit(employee);
   }
 
-  onChangeReportingLine(employee: EmployeeUI,managerId:string): void {
+  onChangeReportingLine(employee: EmployeeUI): void {
     this.changeReportingLine.emit(employee);
   }
 }

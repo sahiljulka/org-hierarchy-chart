@@ -28,7 +28,6 @@
                         <input class="full-width-input" clrInput id="name" type="text" formControlName="name" />
                         <clr-control-error *ngIf="nameControl?.invalid && nameControl?.touched">
                             <small *ngIf="nameControl?.hasError('required')">Name is required</small>
-                            <small *ngIf="nameControl?.hasError('minlength')">Name must be at least 3 characters</small>
                         </clr-control-error>
                     </clr-input-container>
                 </div>

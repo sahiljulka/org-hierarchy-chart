@@ -1,9 +1,7 @@
-<header class="header-6">
-    <div class="branding">
-        <a href="javascript://" class="nav-link">
-            <cds-icon shape="cog" solid="true" size="20"></cds-icon>
-            <span class="title">Hierarchical Organization Chart</span>
-        </a>
-    </div>
-</header>
+<app-header [title]="title"></app-header>
+<clr-alert *ngIf="showError" [clrAlertType]="'danger'" (clrAlertClosedChange)="onClose()" >
+    <clr-alert-item>
+        <span class="alert-text">{{errMsg}}</span>
+    </clr-alert-item>
+</clr-alert>
 <router-outlet></router-outlet>

@@ -3,6 +3,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { v4 as uuidv4 } from 'uuid';
 import { EmployeeService } from '../../services/employee.service';
+import { Store } from '@ngrx/store';
+import { addReportee } from '../../store/actions/employee.actions';
 
 @Component({
   selector: 'app-add-reportee',
@@ -10,23 +12,19 @@ import { EmployeeService } from '../../services/employee.service';
   styleUrls: ['./add-reportee.component.scss']
 })
 export class AddReporteeComponent {
-  @Input('showDialog') showDialog = false
   @Input('managerDetails') managerDetails: EmployeeUI = {} as EmployeeUI
   @Output() modalClose = new EventEmitter<boolean>();
 
-  closeModal() {
-    this.addEmployeeForm.reset()
-    this.modalClose.emit(false)
-  }
+  showDialog = true
 
   addEmployeeForm!: FormGroup;
   designationOptions = Object.values(EmployeeDesignation);
 
-  constructor(private fb: FormBuilder,private employeeService: EmployeeService) { }
+  constructor(private fb: FormBuilder,private store: Store) { }
 
   ngOnInit() {
     this.addEmployeeForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(3)]],
+      name: ['', [Validators.required]],
       designation: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       phone: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]]
@@ -51,9 +49,15 @@ export class AddReporteeComponent {
 
   onSubmit() {
     let employeeDetails: Employee = { ...this.addEmployeeForm.value, managerId: this.managerDetails?.id, id: uuidv4() }
-    this.employeeService.addEmployee(employeeDetails)
+    this.store.dispatch(addReportee({reportee:employeeDetails}))
     this.addEmployeeForm.reset()
     this.modalClose.emit(true)
+  }
+
+    
+  closeModal() {
+    this.addEmployeeForm.reset()
+    this.modalClose.emit(false)
   }
 
 }

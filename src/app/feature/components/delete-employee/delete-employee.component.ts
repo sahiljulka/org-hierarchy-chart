@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { EmployeeUI } from 'src/app/core/models/employee.model';
 import { EmployeeService } from '../../services/employee.service';
+import { Store } from '@ngrx/store';
+import { deleteEmployee } from '../../store/actions/employee.actions';
 
 @Component({
   selector: 'app-delete-employee',
@@ -9,11 +11,11 @@ import { EmployeeService } from '../../services/employee.service';
 })
 export class DeleteEmployeeComponent {
   @Input('employee') employee: EmployeeUI = {} as EmployeeUI;
-  @Input('showDialog') showDialog = false
   @Output() modalClose = new EventEmitter<boolean>();
 
+  showDialog = true
 
-  constructor(private employeeService: EmployeeService) {
+  constructor(private store: Store) {
   }
 
   closeModal() {
@@ -21,12 +23,7 @@ export class DeleteEmployeeComponent {
   }
 
   deleteEmployee(){
-    this.employeeService.deleteEmployee(this.employee?.id)
+    this.store.dispatch(deleteEmployee({employeeId:this.employee.id}))
     this.modalClose.emit(true)
   }
-
-
 }
-
-
-// TODO - Need to reassign the manager when the employee is deleted

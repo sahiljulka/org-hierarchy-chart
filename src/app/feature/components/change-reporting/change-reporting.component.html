@@ -25,7 +25,7 @@
                 <clr-select-container>
                   <select id="manager" formControlName="manager" clrSelect>
                     <option value="" disabled>Select New Reporting Manager</option>
-                    <option *ngFor="let manager of managers" [value]="manager.id">{{ manager.name }}</option>
+                    <option *ngFor="let manager of acceptableManagers" [value]="manager.id">{{ manager.name }}</option>
                   </select>
                   <clr-control-error *ngIf="managerControl?.invalid && managerControl?.touched">
                     <small *ngIf="managerControl?.hasError('required')">Manager is required</small>

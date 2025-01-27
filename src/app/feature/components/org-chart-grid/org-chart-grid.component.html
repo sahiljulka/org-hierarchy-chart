@@ -10,7 +10,7 @@
     <!-- Rows -->
     <clr-dg-row *ngFor="let employee of employees">
         <clr-dg-action-overflow>
-            <button class="action-item" (click)="onChangeReportingLine(employee,'')">
+            <button class="action-item" (click)="onChangeReportingLine(employee)">
                 Change Reporting Line
             </button>
             <button class="action-item" (click)="onDeleteEmployee(employee)">

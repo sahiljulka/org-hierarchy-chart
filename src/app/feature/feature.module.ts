@@ -9,6 +9,10 @@ import { AddReporteeComponent } from './components/add-reportee/add-reportee.com
 import { ReactiveFormsModule } from '@angular/forms';
 import { DeleteEmployeeComponent } from './components/delete-employee/delete-employee.component';
 import { ChangeReportingComponent } from './components/change-reporting/change-reporting.component';
+import { EffectsModule } from '@ngrx/effects';
+import { EmployeeEffects } from './store/effects/employee.effects';
+import { StoreModule } from '@ngrx/store';
+import { employeeReducer } from './store/reducers/employee.reducers';
 
 
 
@@ -25,7 +29,9 @@ import { ChangeReportingComponent } from './components/change-reporting/change-r
     CommonModule,
     RouterModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    EffectsModule.forFeature([EmployeeEffects]),
+    StoreModule.forFeature('employee', employeeReducer) 
   ],
   exports:[ OrgChartGridComponent,
     OrgChartGraphComponent,

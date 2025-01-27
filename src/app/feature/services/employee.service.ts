@@ -66,7 +66,6 @@ export class EmployeeService {
     if (employee && newManager) {
       // Check for cycles before changing reporting line
       if (this.hasCycle(employee.id, newManagerId)) {
-        alert('Cycle detected! Reporting line change not allowed.');
         return false; // Don't allow the change if there is a cycle
       }
 
@@ -76,17 +75,6 @@ export class EmployeeService {
       return true
     }
     return false
-  }
-
-
-  addReportee(managerId: string, reportee: Employee): void {
-    const employees = this.localStorageService.getEmployees();
-    const manager = employees.find(emp => emp.id === managerId);
-    if (manager) {
-      reportee.managerId = managerId;
-      employees.push(reportee); // Add new reportee
-      this.localStorageService.saveEmployees(employees);
-    }
   }
 
   // TODO: helper function

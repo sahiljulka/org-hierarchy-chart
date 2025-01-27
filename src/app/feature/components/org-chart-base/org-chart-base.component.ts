@@ -1,6 +1,10 @@
+import { select, Store } from '@ngrx/store';
 import { EmployeeService } from '../../services/employee.service';
 import { Employee, EmployeeUI } from './../../../core/models/employee.model';
 import { Component } from '@angular/core';
+import { map, Observable, of } from 'rxjs';
+import { selectEmployees, selectError, selectLoading } from '../../store/selectors/employee.selectors';
+import { loadEmployees } from '../../store/actions/employee.actions';
 
 
 export enum ModalType {
@@ -16,24 +20,37 @@ export enum ModalType {
 })
 export class OrgChartBaseComponent {
 
+  employees$: Observable<EmployeeUI[]> = this.store.pipe(select(selectEmployees));  // Observable of employee list
+  loading$: Observable<boolean> = this.store.pipe(select(selectLoading));  // Observable of loading status
+  error$: Observable<any> = this.store.pipe(select(selectError));  // Observable of error (if any)
+  managers$: Observable<{ id: string, name: string }[]> = of([])
   MODALTYPE = ModalType
-
-  employees: EmployeeUI[] = [];
-  showAddReporteeDialog = false
-  managerDetails: { managerName: string, managerId: string } = { managerName: '', managerId: "" }
   isModalOpen = false;
   modalType: ModalType = ModalType.AddReportee;
-  selectedEmployee: EmployeeUI ={} as EmployeeUI;
-  managers:{id:string,name:string}[]=[]
+  selectedEmployee: EmployeeUI = {} as EmployeeUI;
 
-  constructor(private employeeService: EmployeeService) { }
+  constructor(private store: Store) { }
 
   ngOnInit(): void {
     this.fetchEmployees();
+    this.managers$ = this.employees$.pipe(map(((employees: EmployeeUI[]) =>
+      (employees.map(e => ({ id: e.id, name: e.name }))))))
+  }
+
+  get showAddReporteeDialog() {
+    return this.isModalOpen && this.modalType === this.MODALTYPE.AddReportee
+  }
+
+  get showDeleteEmployeeDialog() {
+    return this.isModalOpen && this.modalType === this.MODALTYPE.DeleteReportee
+  }
+
+  get showChangeReportingDialog() {
+    return this.isModalOpen && this.modalType === this.MODALTYPE.ChangeReporting
   }
 
   fetchEmployees(): void {
-    this.employees = this.employeeService.getEmployees();
+    this.store.dispatch(loadEmployees())
   }
 
   openModal(modalType: ModalType, employee: EmployeeUI) {
@@ -41,15 +58,12 @@ export class OrgChartBaseComponent {
     if (employee) {
       this.selectedEmployee = employee;
     }
-    if(this.modalType===ModalType.ChangeReporting){
-      this.managers=this.employees.filter(e=>(e.id!==employee.id && e.id!=employee.managerId)).map(e=>({id:e.id,name:e.name}))
-    }
     this.isModalOpen = true;
   }
 
-  modalClose(actionCompleted=false) {
+  modalClose(actionCompleted = false) {
     this.isModalOpen = false;
-    if(actionCompleted){
+    if (actionCompleted) {
       this.fetchEmployees()
     }
   }

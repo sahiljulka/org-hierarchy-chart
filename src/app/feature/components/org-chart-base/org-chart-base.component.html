@@ -4,7 +4,7 @@
             <clr-tabs>
                 <clr-tab>
                     <button clrTabLink><cds-icon class="px-4" shape="map"></cds-icon> GRID VIEW </button>
-                    <clr-tab-content *clrIfActive><app-org-chart-grid [employees]="employees"
+                    <clr-tab-content *clrIfActive><app-org-chart-grid [employees]="(employees$ | async) || []"
                             (addReportee)="openModal(MODALTYPE.AddReportee,$event)"
                             (deleteEmployee)="openModal(MODALTYPE.DeleteReportee, $event)"
                             (changeReportingLine)="openModal(MODALTYPE.ChangeReporting, $event)"></app-org-chart-grid>
@@ -19,10 +19,10 @@
     </header>
 </div>
 
-<app-add-reportee [managerDetails]="selectedEmployee" [showDialog]="isModalOpen && modalType === MODALTYPE.AddReportee"
+<app-add-reportee *ngIf="showAddReporteeDialog" [managerDetails]="selectedEmployee"
     (modalClose)="modalClose($event)"></app-add-reportee>
-<app-delete-employee [employee]="selectedEmployee" [showDialog]="isModalOpen && modalType === MODALTYPE.DeleteReportee"
+<app-delete-employee *ngIf="showDeleteEmployeeDialog" [employee]="selectedEmployee"
     (modalClose)="modalClose($event)"></app-delete-employee>
-<app-change-reporting [employee]="selectedEmployee"
-    [showDialog]="isModalOpen && modalType === MODALTYPE.ChangeReporting" [managers]="managers"
+<app-change-reporting *ngIf="showChangeReportingDialog" [employee]="selectedEmployee"
+     [managers]="(managers$ | async) || []"
     (modalClose)="modalClose($event)"></app-change-reporting>
