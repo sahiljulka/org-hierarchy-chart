@@ -29,12 +29,6 @@ export class ChangeReportingComponent {
       manager: ['', Validators.required]
     });
     this.acceptableManagers = this.managers.filter(emp => emp.id != this.employee.id && emp.id != this.employee.managerId)
-    this.store.pipe(select(selectSuccessAction)).subscribe((action:ActionTypes | null)=>{
-      if(action==ActionTypes.ChangeReportingLine){
-        this.resetForm();
-        this.modalClose.emit(true)
-      }
-    })
   }
 
   get managerControl() {
@@ -48,6 +42,8 @@ export class ChangeReportingComponent {
 
   submit() {
     this.store.dispatch(changeReportingLine({ employeeId: this.employee.id, newManagerId: this.managerControl?.value }))
+    this.resetForm();
+    this.modalClose.emit(true)
   }
 
   resetForm() {

@@ -1,7 +1,3 @@
 <app-header [title]="title"></app-header>
-<clr-alert *ngIf="showError" [clrAlertType]="'danger'" (clrAlertClosedChange)="onClose()" >
-    <clr-alert-item>
-        <span class="alert-text">{{errMsg}}</span>
-    </clr-alert-item>
-</clr-alert>
+<app-alert *ngIf="showError" [errMsg]="errMsg"></app-alert>
 <router-outlet></router-outlet>

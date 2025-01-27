@@ -4,19 +4,21 @@ import { ClrTabsModule, ClarityModule } from '@clr/angular';
 import { ClarityIcons, cogIcon, gridChartIcon, mapIcon, vmBugIcon } from '@cds/core/icon';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './components/header/header.component';
+import { AlertComponent } from './components/alert/alert.component';
 
 
 
 @NgModule({
   declarations: [
-    HeaderComponent
+    HeaderComponent,
+    AlertComponent
   ],
   imports: [
     CommonModule,
     ClarityModule,
     BrowserAnimationsModule
   ],
-  exports:[ClarityModule,HeaderComponent]
+  exports:[ClarityModule,HeaderComponent,AlertComponent]
 })
 export class SharedModule {
   constructor() {

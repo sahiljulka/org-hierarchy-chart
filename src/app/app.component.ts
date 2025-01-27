@@ -18,16 +18,20 @@ export class AppComponent {
 
   ngOnInit(): void {
     this.appInitService.initializeApp();
+    this.handleAppWideErrors();
+  }
+
+  handleAppWideErrors(){
     this.store.pipe(select(selectError)).subscribe((errMsg) => {
       if (errMsg){
         this.showError=true
         this.errMsg=errMsg;
         this.store.dispatch(clearError())
+        setTimeout(()=>{
+          this.showError=false
+        }, 3000)
       }
     })
   }
 
-  onClose(){
-    this.showError=false
-  }
 }
