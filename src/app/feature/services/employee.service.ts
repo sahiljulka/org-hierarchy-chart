@@ -6,7 +6,6 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class EmployeeService {
-
   constructor(private localStorageService: LocalstorageService) { }
 
   getEmployees(): EmployeeUI[] {
@@ -21,10 +20,6 @@ export class EmployeeService {
 
   addEmployee(employee: Employee): void {
     this.localStorageService.addEmployee(employee);
-  }
-
-  updateEmployee(updatedEmployee: Employee): void {
-    this.localStorageService.updateEmployee(updatedEmployee);
   }
 
   deleteEmployee(employeeId: string): void {
@@ -95,7 +90,7 @@ export class EmployeeService {
   }
 
   // TODO: helper function
-  hasCycle(employeeId: string, newManagerId: string): boolean {
+  private hasCycle(employeeId: string, newManagerId: string): boolean {
     let currentManagerId: string | undefined = newManagerId;
 
     while (currentManagerId) {
@@ -118,7 +113,7 @@ export class EmployeeService {
   }
 
   // TODO: helper function
-  getEmployeeById(employeeId: string): Employee | undefined {
+  private getEmployeeById(employeeId: string): Employee | undefined {
     const employees = this.localStorageService.getEmployees();
     return employees.find(emp => emp.id === employeeId);
   }

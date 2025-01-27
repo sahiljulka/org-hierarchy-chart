@@ -29,6 +29,7 @@ import { ChangeReportingComponent } from './components/change-reporting/change-r
   ],
   exports:[ OrgChartGridComponent,
     OrgChartGraphComponent,
-    OrgChartBaseComponent],
+    OrgChartBaseComponent,
+    SharedModule],
 })
 export class FeatureModule { }

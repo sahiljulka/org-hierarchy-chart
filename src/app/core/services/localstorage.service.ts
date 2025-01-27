@@ -6,8 +6,6 @@ import { v4 as uuidv4 } from 'uuid';
   providedIn: 'root'
 })
 export class LocalstorageService {
-
-
   private readonly STORAGE_KEY = 'employees';
 
   constructor() { }
@@ -24,20 +22,6 @@ export class LocalstorageService {
   addEmployee(employee: Employee): void {
     const employees = this.getEmployees();
     employees.push(employee);
-    this.saveEmployees(employees);
-  }
-
-  updateEmployee(updatedEmployee: Employee): void {
-    let employees = this.getEmployees();
-    employees = employees.map(employee =>
-      employee.id === updatedEmployee.id ? updatedEmployee : employee
-    );
-    this.saveEmployees(employees);
-  }
-
-  deleteEmployee(employeeId: string): void {
-    let employees = this.getEmployees();
-    employees = employees.filter(employee => employee.id !== employeeId);
     this.saveEmployees(employees);
   }
 
