@@ -12,12 +12,13 @@ import { ChangeReportingComponent } from './components/change-reporting/change-r
 import { EffectsModule } from '@ngrx/effects';
 import { EmployeeEffects } from './store/effects/employee.effects';
 import { StoreModule } from '@ngrx/store';
-import {OrganizationChartModule} from 'primeng/organizationchart';
+import { OrganizationChartModule } from 'primeng/organizationchart';
 import { employeeReducer } from './store/reducers/employee.reducers';
-import { ToastModule } from 'primeng/toast'; 
+import { ToastModule } from 'primeng/toast';
 import { PanelModule } from 'primeng/panel';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CoreModule } from '../core/core.module';
 
 
 @NgModule({
@@ -35,16 +36,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     SharedModule,
     ReactiveFormsModule,
     EffectsModule.forFeature([EmployeeEffects]),
-    StoreModule.forFeature('employee', employeeReducer) ,
+    StoreModule.forFeature('employee', employeeReducer),
     OrganizationChartModule,
-    ToastModule, 
-    PanelModule, 
+    ToastModule,
+    PanelModule,
     BrowserModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    CoreModule
   ],
-  exports:[ OrgChartGridComponent,
+  exports: [OrgChartGridComponent,
     OrgChartGraphComponent,
     OrgChartBaseComponent,
-    SharedModule],
+    SharedModule, CoreModule],
 })
 export class FeatureModule { }

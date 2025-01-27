@@ -61,6 +61,11 @@ export class EmployeeEffects {
             ofType(deleteEmployee),
             map(action => {
                 try {
+                    const employees=this.employeeService.getEmployees()
+                    const managerId=employees.find(emp=>emp.id===action.employeeId)?.managerId
+                    if(!managerId){
+                        return deleteEmployeeFailure({ error:`CEO is at top of hierarchy, can't be deleted` });
+                    }
                     this.employeeService.deleteEmployee(action.employeeId);
                     const updatedEmployees = this.employeeService.getEmployees(); 
                     return deleteEmployeeSuccess({ updatedEmployees });

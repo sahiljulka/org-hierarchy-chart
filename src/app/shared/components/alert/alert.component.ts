@@ -6,10 +6,6 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./alert.component.scss']
 })
 export class AlertComponent {
-  @Input('errMsg') errMsg=""
-
-
-  onClose(){
-  }
-
+  @Input('msg') msg=""
+  @Input('clrAlertType') clrAlertType=""
 }

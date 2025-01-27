@@ -1,10 +1,11 @@
 import { select, Store } from '@ngrx/store';
 import { EmployeeService } from '../../services/employee.service';
 import { Employee, EmployeeUI } from './../../../core/models/employee.model';
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { map, Observable, of, shareReplay } from 'rxjs';
 import { selectEmployees, selectError, selectLoading } from '../../store/selectors/employee.selectors';
 import { loadEmployees } from '../../store/actions/employee.actions';
+import { Unsubscriber } from 'src/app/core/utilties/unsubscriber';
 
 
 export enum ModalType {
@@ -22,9 +23,10 @@ export enum EMPLOYEE_ACTIONS{
 @Component({
   selector: 'app-org-chart-base',
   templateUrl: './org-chart-base.component.html',
-  styleUrls: ['./org-chart-base.component.scss']
+  styleUrls: ['./org-chart-base.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
-export class OrgChartBaseComponent {
+export class OrgChartBaseComponent extends Unsubscriber {
 
   employees$: Observable<EmployeeUI[]> = this.store.pipe(select(selectEmployees));  // Observable of employee list
   loading$: Observable<boolean> = this.store.pipe(select(selectLoading));  // Observable of loading status
@@ -36,6 +38,7 @@ export class OrgChartBaseComponent {
   selectedEmployee: EmployeeUI = {} as EmployeeUI;
 
   constructor(private store: Store) {
+    super()
    }
 
   ngOnInit(): void {

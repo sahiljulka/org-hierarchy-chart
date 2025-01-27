@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { EmployeeUI } from 'src/app/core/models/employee.model';
 import { EMPLOYEE_ACTIONS } from '../org-chart-base/org-chart-base.component';
+import { Unsubscriber } from 'src/app/core/utilties/unsubscriber';
 
 interface OrganizationNode {
   label: string;
@@ -16,9 +17,9 @@ interface OrganizationNode {
 @Component({
   selector: 'app-org-chart-graph',
   templateUrl: './org-chart-graph.component.html',
-  styleUrls: ['./org-chart-graph.component.scss']
+  styleUrls: ['./org-chart-graph.component.scss'],
 })
-export class OrgChartGraphComponent {
+export class OrgChartGraphComponent{
   @Input() employees: EmployeeUI[] = [];
   @Output() addReportee = new EventEmitter<EmployeeUI>();
   @Output() editEmployee = new EventEmitter<EmployeeUI>();
@@ -31,6 +32,8 @@ export class OrgChartGraphComponent {
 
   ngOnInit() {
     this.organizationData = this.buildOrganizationTree(this.employees);
+    console.log(this.organizationData);
+    
     this.actions = Object.values(EMPLOYEE_ACTIONS)
   }
 
