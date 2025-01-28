@@ -33,9 +33,7 @@ export class AppComponent extends Unsubscriber {
         this.msg = errMsg;
         this.clrAlertType="danger"
         this.store.dispatch(clearError())
-        setTimeout(() => {
-          this.showNotification = false
-        }, 3000)
+        this.hideNotificationAfterTimeout()
       }
     })
     
@@ -56,10 +54,14 @@ export class AppComponent extends Unsubscriber {
         }
         this.showNotification = true
         this.clrAlertType="success"
-        setTimeout(() => {
-          this.showNotification = false
-        }, 3000)
+        this.hideNotificationAfterTimeout()
       }
     })
+  }
+
+  private hideNotificationAfterTimeout() {
+    setTimeout(() => {
+      this.showNotification = false;
+    }, 3000);
   }
 }

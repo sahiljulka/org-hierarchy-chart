@@ -77,7 +77,6 @@ export class EmployeeService {
     return false
   }
 
-  // TODO: helper function
   private hasCycle(employeeId: string, newManagerId: string): boolean {
     let currentManagerId: string | undefined = newManagerId;
 
@@ -100,7 +99,6 @@ export class EmployeeService {
     return false; // No cycle detected
   }
 
-  // TODO: helper function
   private getEmployeeById(employeeId: string): Employee | undefined {
     const employees = this.localStorageService.getEmployees();
     return employees.find(emp => emp.id === employeeId);
